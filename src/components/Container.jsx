@@ -6,7 +6,8 @@ import Button from './Button'
 import * as likeApi from '../api/likeApi'
 import * as followApi from '../api/followApi'
 import * as videoApi from '../api/videoApi'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { show } from '../redux/appSlice'
 function Container({ videoUser }) {
 
     const [video, setVideo] = useState(videoUser)
@@ -15,15 +16,26 @@ function Container({ videoUser }) {
     const [isPLay, setIsPlay] = useState(false)
     // const [isFollow, setIsFollow] = useState(videoUser?.user.is_followed)
     const dispatch = useDispatch()
+    const token = useSelector(state => state.auth.token)
     const handleLike = async () => {
-        const data = await likeApi.unLikeVideo(video.id, dispatch)
-        setVideo(data)
-        setIsLike(false)
+        if (token) {
+            const data = await likeApi.unLikeVideo(video.id, dispatch)
+            setVideo(data)
+            setIsLike(false)
+        } else {
+            dispatch(show())
+        }
+
     }
     const handleUnLike = async () => {
-        const data = await likeApi.likeVideo(video.id, dispatch)
-        setVideo(data)
-        setIsLike(true)
+        if (token) {
+            const data = await likeApi.likeVideo(video.id, dispatch)
+            setVideo(data)
+            setIsLike(true)
+        } else {
+            dispatch(show())
+        }
+
     }
     const handleFollow = async () => {
         if (video.user.is_followed) {
@@ -50,7 +62,7 @@ function Container({ videoUser }) {
 
     return (
         <div className='py-5 flex border-b-[#1618231f] border-b'>
-            <Link className='w-14 h-14 contents'><Image src={video.user.avatar} className="w-14 rounded-full  h-14" /></Link>
+            <Link className='w-14 h-14 contents'><Image src={video?.user.avatar} className="w-14 rounded-full  h-14" /></Link>
             <div className="flex ml-3 w-full flex-col">
                 {/* contetn */}
                 <div className="relative w-full">

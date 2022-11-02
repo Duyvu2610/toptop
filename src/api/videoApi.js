@@ -20,6 +20,23 @@ export const getVideo = async (id) => {
         console.log(err);
     }
 }
+export const getLikedVideo = async (id) => {
+    try {
+        const res = await API.get(`users/${id}/liked-videos`)
+        return res.data
+    } catch (err) {
+        console.log(err);
+    }
+}
+export const getUserVideos = async (id) => {
+    try {
+        const res = await API.get(`users/${id}/videos`)
+        return res.data
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 // export const postVideo = async (id, token) => {
 //     try {
 //         const res = await API.post(`videos/${id}`,{

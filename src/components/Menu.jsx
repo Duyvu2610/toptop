@@ -7,6 +7,7 @@ import * as authApi from '../api/authApi'
 import Image from './Image';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { logoutSucces } from '../redux/authSilce';
 function Menu() {
     const items = [
         {
@@ -64,6 +65,9 @@ function Menu() {
     const navigate = useNavigate()
     const handleLogOut = () => {
         authApi.logout(dispatch)
+        navigate(0)
+        dispatch(logoutSucces())
+
     }
     const handleRedirectProfile = async () => {
         const data = await authApi.getCurrentUser()

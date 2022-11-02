@@ -37,12 +37,15 @@ function Sidebar({ isSmall }) {
   const user = useSelector(state => state.auth.login.currentUser)
   const [suggestUser, setSuggestUser] = useState([])
   const [followUser, setFollowUser] = useState([])
+  const token = useSelector(state => state.auth.token)
   useEffect(() => {
-    const fetch = async () => {
-      const data = await followApi.getFollowing(1)
-      setFollowUser(data)
+    if (token) {
+      const fetch = async () => {
+        const data = await followApi.getFollowing(1)
+        setFollowUser(data)
+      }
+      fetch()
     }
-    fetch()
   }, [user])
   useEffect(() => {
     const fetch = async () => {

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import Button from './Button'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { BackIcon, FbIcon, GoogleIcon, HumanIcon, InstagramIcon, KakaoTalkIcon, LineIcon, TwitterIcon, WhatAppIcon } from './icons/icons'
+import Button from './Button'
 import * as authApi from '../api/authApi'
 import { dontShow } from '../redux/appSlice'
-import API from '../api/api'
+import { useNavigate } from 'react-router-dom'
 
 function FormLogin() {
 
@@ -57,6 +57,7 @@ function FormLogin() {
     const [registerInput, setRegisterInput] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
     const handleShowLoginInput = () => {
         setLoginModal(list)
         setLoginInput(true)
@@ -69,13 +70,12 @@ function FormLogin() {
     const handleRegister = () => {
         setRegisterInput(false)
         setLoginModal([])
-
-
     }
     const handleLogin = () => {
         setLoginInput(false)
         setRegisterInput(false)
         setLoginModal(list)
+
 
     }
     const handleLoginAcc = async () => {
@@ -84,6 +84,7 @@ function FormLogin() {
             password
         }
         await authApi.login(user, dispatch)
+        navigate(0)
     }
     const handleRegisterAcc = () => {
         const user = {
