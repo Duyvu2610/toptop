@@ -8,15 +8,18 @@ import * as followApi from '../api/followApi'
 import * as videoApi from '../api/videoApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { show } from '../redux/appSlice'
+import ReactVisibilitySensor from 'react-visibility-sensor'
 function Container({ videoUser }) {
 
     const [video, setVideo] = useState(videoUser)
     const [isLike, setIsLike] = useState(videoUser.is_liked)
     const [visibleIcon, setVisibleIcon] = useState("hidden")
     const [isPLay, setIsPlay] = useState(false)
+    const [isVisible, setIsVisible] = useState(false);
     // const [isFollow, setIsFollow] = useState(videoUser?.user.is_followed)
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
+    const videoRef = useRef()
     const handleLike = async () => {
         if (token) {
             const data = await likeApi.unLikeVideo(video.id, dispatch)
@@ -50,7 +53,6 @@ function Container({ videoUser }) {
 
 
     }
-    const videoRef = useRef()
     const handlePlay = () => {
         videoRef.current.play()
         setIsPlay(true)
@@ -59,6 +61,15 @@ function Container({ videoUser }) {
         videoRef.current.pause()
         setIsPlay(false)
     }
+    useEffect(() => {
+        if (isVisible) {
+            videoRef.current.play();
+        } else {
+            if (videoRef.current.play) {
+                videoRef.current.pause();
+            }
+        }
+    }, [isVisible]);
 
     return (
         <div className='py-5 flex border-b-[#1618231f] border-b'>
@@ -83,7 +94,9 @@ function Container({ videoUser }) {
                         state={video}
                     >
                         <Link to={`/@${video.user.nickname}/video/${video.id}`}>
-                            <video src={video.file_url} className="w-72 rounded-xl" ref={videoRef} loop></video>
+                            <ReactVisibilitySensor onChange={(isVisible) => setIsVisible(isVisible)}>
+                                <video src={video.file_url} className="w-72 rounded-xl" ref={videoRef} loop></video>
+                            </ReactVisibilitySensor>
                         </Link>
 
                         {

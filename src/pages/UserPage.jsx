@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Button from '../components/Button'
-import { EditIcon, FollowIcon, LockIcon, MoreIcon, ShareIconSolid, SwitchIcon } from '../components/icons/icons'
+import { EditIcon, FollowIcon, LockIcon, MoreIcon, ShareIconSolid, SwitchIcon, TickIcon } from '../components/icons/icons'
 import Image from '../components/Image'
 import Sidebar from '../layouts/Sidebar'
 import { Link, useLocation, matchRoutes } from 'react-router-dom'
@@ -66,7 +66,10 @@ function UserPage() {
                         <div className="flex">
                             <Image className='w-28 h-28 rounded-full' src={userProfile.avatar} />
                             <div className="ml-5">
-                                <h2 className='font-bold text-3xl pb-1'>{userProfile.nickname}</h2>
+                                <div className="flex items-center">
+                                    <h2 className='font-bold text-3xl pb-1 mr-3'>{userProfile.nickname}</h2>
+                                    {userProfile.tick && <span className='text-xl'><TickIcon className='w-[20px] h-[20px]' /></span>}
+                                </div>
                                 <h1 className='font-semibold text-lg text-ellipsis overflow-hidden max-w-[28rem] whitespace-nowrap pb-1'>{userProfile.first_name + " " + userProfile.last_name}</h1>
                                 <div className="flex items-center mt-2">
                                     {userProfile.is_followed ?
