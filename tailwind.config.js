@@ -56,7 +56,8 @@ module.exports = {
         'sidebar-w-small': '15rem',
         'sidebar-wrapper-sm': '20rem',
         'main-w': '43rem',
-        'logonForm-w': '30rem'
+        'logonForm-w': '30rem',
+        'video': 'calc(450px + ((100vw - 768px) / 1152) * 100)'
 
       },
       gridTemplateColumns: {

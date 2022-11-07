@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Image from './Image'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { CommentIcon, LikeIcon, MusicIcon, PauseIcon, PlayIcon, ShareIcon, VolumnIcon } from './icons/icons'
 import Button from './Button'
 import * as likeApi from '../api/likeApi'
@@ -13,13 +13,14 @@ function Container({ videoUser }) {
 
     const [video, setVideo] = useState(videoUser)
     const [isLike, setIsLike] = useState(videoUser.is_liked)
-    const [visibleIcon, setVisibleIcon] = useState("hidden")
-    const [isPLay, setIsPlay] = useState(false)
+    // const [visibleIcon, setVisibleIcon] = useState("hidden")
+    // const [isPLay, setIsPlay] = useState(true)
     const [isVisible, setIsVisible] = useState(false);
     // const [isFollow, setIsFollow] = useState(videoUser?.user.is_followed)
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
     const videoRef = useRef()
+    const navigate = useNavigate()
     const handleLike = async () => {
         if (token) {
             const data = await likeApi.unLikeVideo(video.id, dispatch)
@@ -53,27 +54,34 @@ function Container({ videoUser }) {
 
 
     }
-    const handlePlay = () => {
-        videoRef.current.play()
-        setIsPlay(true)
-    }
-    const handlePause = () => {
-        videoRef.current.pause()
-        setIsPlay(false)
-    }
+    // const handlePlay = () => {
+    //     videoRef.current.play()
+    //     setIsPlay(true)
+    // }
+    // const handlePause = () => {
+    //     videoRef.current.pause()
+    //     setIsPlay(false)
+    // }
     useEffect(() => {
         if (isVisible) {
+            videoRef.current.load()
             videoRef.current.play();
+            // setIsPlay(true)
         } else {
             if (videoRef.current.play) {
+                // setIsPlay(false)
+
                 videoRef.current.pause();
             }
         }
     }, [isVisible]);
+    const handleCmt = () => {
+        navigate(`/@${video.user.nickname}/video/${video.id}`)
+    }
 
     return (
-        <div className='py-5 flex border-b-[#1618231f] border-b'>
-            <Link className='w-14 h-14 contents'><Image src={video?.user.avatar} className="w-14 rounded-full  h-14" /></Link>
+        <div className='py-5 flex border-b-[#1618231f] border-b la'>
+            <Link className='w-14 h-14 contents' to={`/@${video?.user.nickname}`}><Image src={video?.user.avatar} className="w-14 rounded-full  h-14" /></Link>
             <div className="flex ml-3 w-full flex-col">
                 {/* contetn */}
                 <div className="relative w-full">
@@ -88,31 +96,33 @@ function Container({ videoUser }) {
                 {/* video */}
                 <div className="mt-2 flex relative">
                     <div
-                        className="relative"
-                        onMouseOver={() => setVisibleIcon("visible")}
-                        onMouseLeave={() => setVisibleIcon('hidden')}
-                        state={video}
+                        className="relative "
+                    // onMouseOver={() => setVisibleIcon("visible")}
+                    // onMouseLeave={() => setVisibleIcon('hidden')}
+                    // state={video}
                     >
-                        <Link to={`/@${video.user.nickname}/video/${video.id}`}>
+                        <Link to={`/@${video.user.nickname}/video/${video.id}`} className={`${video.meta.video.resolution_x > video.meta.video.resolution_y ? "w-video" : "h-video"} block`}>
                             <ReactVisibilitySensor onChange={(isVisible) => setIsVisible(isVisible)}>
-                                <video src={video.file_url} className="w-72 rounded-xl" ref={videoRef} loop></video>
+                                <video src={video.file_url} controlsList="nofullscreen nodownload noremoteplayback noplaybackrate" className="w-full h-full rounded-xl object-contain" controls ref={videoRef} loop playsInline disablePictureInPicture ></video>
                             </ReactVisibilitySensor>
                         </Link>
 
-                        {
+                        {/* {
                             isPLay
                                 ?
                                 <Button className={`absolute bottom-8 left-6 ${visibleIcon} ease-in duration-1000 `} onClick={handlePause}><PauseIcon /></Button>
                                 :
                                 <Button className={`absolute bottom-8 left-6 ${visibleIcon} ease-in duration-1000 `} onClick={handlePlay}><PlayIcon /></Button>
-                        }
-                        <Button className={`absolute bottom-8 right-6 ${visibleIcon} transition duration-300`} ><VolumnIcon /></Button>
+                        } */}
+                        {/* <Button className={`absolute bottom-8 right-6 ${visibleIcon} transition duration-300`} >
+                            <VolumnIcon />
+                        </Button> */}
                     </div>
 
                     <div className="ml-4 flex flex-col justify-end">
                         <div className="w-12 h-12 rounded-full bg-input flex items-center justify-center my-1" onClick={isLike ? handleLike : handleUnLike}><LikeIcon className={isLike ? `text-red-500` : ''} /></div>
                         <p className='text-center text-xs font-semibold'>{video.likes_count}</p>
-                        <div className="w-12 h-12 rounded-full bg-input flex items-center justify-center my-1"><CommentIcon /></div>
+                        <div className="w-12 h-12 rounded-full bg-input flex items-center justify-center my-1" onClick={handleCmt}><CommentIcon /></div>
                         <p className='text-center text-xs font-semibold'>{video.comments_count}</p>
                         <div className="w-12 h-12 rounded-full bg-input flex items-center justify-center my-1"><ShareIcon /></div>
                         <p className='text-center text-xs font-semibold'>{video.shares_count}</p>
