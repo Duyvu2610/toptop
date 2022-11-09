@@ -36,7 +36,6 @@ export const getUserVideos = async (id) => {
         console.log(err);
     }
 }
-
 // export const postVideo = async (id, token) => {
 //     try {
 //         const res = await API.post(`videos/${id}`,{

@@ -19,6 +19,7 @@ export const login = async (user, dispacth) => {
         return res
     } catch (error) {
         dispacth(loginFailed())
+        alert("tk mk sai")
     }
 }
 export const logout = async (dispacth) => {
@@ -37,5 +38,6 @@ export const register = async (dispacth, user) => {
         dispacth(setToken(res.meta.token))
     } catch (err) {
         console.log(err);
+        alert("Tài khoản đã tồn tại")
     }
 }

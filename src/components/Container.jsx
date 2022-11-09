@@ -12,7 +12,7 @@ import ReactVisibilitySensor from 'react-visibility-sensor'
 function Container({ videoUser }) {
 
     const [video, setVideo] = useState(videoUser)
-    const [isLike, setIsLike] = useState(videoUser.is_liked)
+    // const [isLike, setIsLike] = useState(videoUser.is_liked)
     // const [visibleIcon, setVisibleIcon] = useState("hidden")
     // const [isPLay, setIsPlay] = useState(true)
     const [isVisible, setIsVisible] = useState(false);
@@ -23,23 +23,17 @@ function Container({ videoUser }) {
     const navigate = useNavigate()
     const handleLike = async () => {
         if (token) {
-            const data = await likeApi.unLikeVideo(video.id, dispatch)
-            setVideo(data)
-            setIsLike(false)
+            if (video.is_liked) {
+                const data = await likeApi.unLikeVideo(video.id, dispatch)
+                setVideo(data)
+            } else {
+                const data = await likeApi.likeVideo(video.id, dispatch)
+                setVideo(data)
+            }
+
         } else {
             dispatch(show())
         }
-
-    }
-    const handleUnLike = async () => {
-        if (token) {
-            const data = await likeApi.likeVideo(video.id, dispatch)
-            setVideo(data)
-            setIsLike(true)
-        } else {
-            dispatch(show())
-        }
-
     }
     const handleFollow = async () => {
         if (video.user.is_followed) {
@@ -120,7 +114,7 @@ function Container({ videoUser }) {
                     </div>
 
                     <div className="ml-4 flex flex-col justify-end">
-                        <div className="w-12 h-12 rounded-full bg-input flex items-center justify-center my-1" onClick={isLike ? handleLike : handleUnLike}><LikeIcon className={isLike ? `text-red-500` : ''} /></div>
+                        <div className="w-12 h-12 rounded-full bg-input flex items-center justify-center my-1" onClick={handleLike}><LikeIcon className={video.is_liked ? `text-red-500` : ''} /></div>
                         <p className='text-center text-xs font-semibold'>{video.likes_count}</p>
                         <div className="w-12 h-12 rounded-full bg-input flex items-center justify-center my-1" onClick={handleCmt}><CommentIcon /></div>
                         <p className='text-center text-xs font-semibold'>{video.comments_count}</p>
