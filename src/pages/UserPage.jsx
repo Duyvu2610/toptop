@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Button from '../components/Button'
 import { EditIcon, FollowIcon, LockIcon, MoreIcon, ShareIconSolid, SwitchIcon, TickIcon } from '../components/icons/icons'
 import Image from '../components/Image'
@@ -29,7 +29,6 @@ function UserPage() {
             setUserProfile(res)
         }
         res()
-        console.log(res.is_followed);
     }, [data])
     const handleUnfollow = async () => {
         const res = await followApi.unFollowUser(userProfile.id)
@@ -54,7 +53,13 @@ function UserPage() {
         setVideoList(res.videos)
         setAbsolute(0)
     }
-    console.log(videoList);
+    const handleHoverVideo = (e) => {
+        // refsById[e.target.id].current.play()
+        // console.log(e);
+        // console.log(refsById[]);
+        e.target.play()
+
+    }
     return (
         <div className='mt-header flex'>
             <div className="pt-5 pl-2 pb-6">
@@ -67,7 +72,7 @@ function UserPage() {
                             <Image className='w-28 h-28 rounded-full' src={userProfile.avatar} />
                             <div className="ml-5">
                                 <div className="flex items-center">
-                                    <h2 className='font-bold text-3xl pb-1 mr-3'>{userProfile.nickname}</h2>
+                                    <h2 className='font-bold text-3xl pb-1 mr-3'>{userProfile?.nickname}</h2>
                                     {userProfile.tick && <span className='text-xl'><TickIcon className='w-[20px] h-[20px]' /></span>}
                                 </div>
                                 <h1 className='font-semibold text-lg text-ellipsis overflow-hidden max-w-[28rem] whitespace-nowrap pb-1'>{userProfile.first_name + " " + userProfile.last_name}</h1>
@@ -124,7 +129,7 @@ function UserPage() {
 
                                 }}
                             >
-                                <LockIcon />
+
                                 Đã thích
                             </p>
                             <div className={`w-1/2 absolute h-[2px] bg-black bottom-0 transition left-[${absolute}px] duration-300`} ref={divRef}></div>
@@ -132,7 +137,10 @@ function UserPage() {
                         <div className={`grid gap-x-6 gap-y-4 grid-cols-userVideo `} ref={videoListRef}>
                             {videoList ? videoList.map((e, i) =>
                                 <Link className="" key={i} to={`/@${e.user.nickname}/video/${e.id}`}>
-                                    <Image src={e.thumb_url} className='h-64 w-full rounded' />
+                                    <video src={e.file_url} muted className='h-64 w-full rounded object-cover' onMouseEnter={(e) => handleHoverVideo(e)} onMouseLeave={(e) => {
+                                        e.target.pause()
+                                        // videoRef.current.load()
+                                    }}></video>
                                     <p className='text-ellipsis overflow-hidden whitespace-nowrap font-normal mt-1 text-textColor'>{e.description}</p>
                                 </Link>
                             ) : <div>k</div>}

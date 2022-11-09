@@ -69,12 +69,12 @@ function VideoPage() {
                             </div>
                         </div>
                         <div className="flex items-center text-[#161823bf] text-sm mt-4 bg-[#f1f1f2] border-span border-focus justify-between">
-                            <p className='pl-2'>{data.pathname}</p>
+                            <p className='pl-2'>{window.location.href}</p>
                             <div className="text-boldColor font-bold cursor-pointer hover:bg-[#16182308] p-2">Sao chép liên kết</div>
                         </div>
                     </div>
                 </div>
-                <div className="w-full pt-6 px-8 bg-[#f8f8f8] border-t border-b border-[#16182333] overflow-auto">
+                <div className="w-full pt-6 px-8 bg-[#f8f8f8] border-t border-b border-[#16182333] overflow-auto flex-1">
                     {cmtList?.map((e, i) => <Comment data={e} key={i} />)}
                 </div>
                 <div className="h-[5.37rem] mx-8 py-5">

@@ -103,7 +103,7 @@ function Container({ videoUser }) {
                     >
                         <Link to={`/@${video.user.nickname}/video/${video.id}`} className={`${video.meta.video.resolution_x > video.meta.video.resolution_y ? "w-video" : "h-video"} block`}>
                             <ReactVisibilitySensor onChange={(isVisible) => setIsVisible(isVisible)}>
-                                <video src={video.file_url} controlsList="nofullscreen nodownload noremoteplayback noplaybackrate" className="w-full h-full rounded-xl object-contain" controls ref={videoRef} loop playsInline disablePictureInPicture ></video>
+                                <video src={video.file_url} controlsList="nofullscreen nodownload noremoteplayback noplaybackrate" className="w-full h-full rounded-xl object-contain" ref={videoRef} loop playsInline disablePictureInPicture controls poster={video.thumb_url} ></video>
                             </ReactVisibilitySensor>
                         </Link>
 
