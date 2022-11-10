@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 
 function Button({ to, href, onClick, className, leftIcon, primary = false, rounded = false, red = false,
-  rightIcon, children, ...passProps }, ref) {
+  rightIcon, children, noClick, ...passProps }, ref) {
 
   let Temp = 'button'
   const props = {
@@ -26,6 +26,8 @@ function Button({ to, href, onClick, className, leftIcon, primary = false, round
     classNames = 'rounded px-4 bg-primary font-semibold text-white'
   } else if (red) {
     classNames = 'rounded px-4 text-primary border-primary border-focus hover:bg-[#fe2c550f]'
+  } else if (noClick) {
+    classNames = 'rounded px-4 bg-[#ebebeb] text-[#16182357] cursor-not-allowed '
   }
   return (
     <Temp className={`${classNames1} ${className} ${classNames}`} {...props} ref={ref}>
