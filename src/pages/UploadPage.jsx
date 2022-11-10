@@ -50,7 +50,7 @@ function UploadPage() {
               </div>
             </div>
             <div className="mt-6 mb-2 font-semibold">Ảnh bìa</div>
-            <input type="number" className='flex border-[2px] w-full h-10 rounded-md p-3' />
+            <input type="number" className='flex border-[2px] w-full h-10 rounded-md p-3' placeholder='Chọn giây thứ bao nhiêu làm thumb' />
             <div className="mt-6 mb-2 font-semibold">Ai có thể xem video này</div>
             <div className="relative w-72 transition-all">
               <div className=" h-9 rounded-sm border-[2px] pl-2 pt-1" onClick={handleDropDown}>
@@ -92,7 +92,7 @@ function UploadPage() {
           </div>
         </div>
       </div>
-      <div className="bg-black w-full mt-4 pt-10 pl-96 relative text-white flex">
+      <div className="bg-black w-full mt-4 py-10 pl-96 relative text-white flex">
         <Image src={images.logoImg} className="absolute left-[150px]"></Image>
         <Image src={images.logoText} className="absolute left-[200px] top-[46px]"></Image>
         <div className="flex flex-col flex-1">

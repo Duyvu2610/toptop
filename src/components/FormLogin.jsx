@@ -95,7 +95,7 @@ function FormLogin() {
         authApi.register(dispatch, user)
     }
     return (
-        <div className=" fixed w-screen h-screen z-[999999] bg-[#00000080] mt-[-3.75rem] flex items-center justify-center scroll-none transition duration-500" >
+        <div className=" w-screen h-screen z-[999999] bg-[#00000080] absolute top-0 left-0 bottom-0 right-0 flex items-center justify-center scroll-none transition duration-500" >
             {loginModal.length !== 0 ?
                 <div className='w-logonForm-w flex flex-col pt-12 m-auto bg-white  rounded-lg relative '>
                     <div className="flex-1">

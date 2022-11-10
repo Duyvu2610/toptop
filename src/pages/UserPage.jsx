@@ -62,11 +62,11 @@ function UserPage() {
 
     }
     return (
-        <div className='mt-header flex'>
+        <div className='relative top-header flex'>
             <div className="pt-5 pl-2 pb-6">
                 <Sidebar isSmall />
             </div>
-            <div className="ml-sidebar-w-small py-8 px-6 w-full">
+            <div className="ml-sidebar-w-small py-8 px-6 w-full ">
                 <div className="flex flex-col">
                     <div className="flex flex-col pr-24 relative max-w-[39rem] mb-5 ">
                         <div className="flex">
