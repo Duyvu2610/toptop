@@ -58,7 +58,14 @@ function Sidebar({ isSmall }) {
   return (
     <div className={`flex flex-col ${isSmall ? 'w-sidebar-w-small' : 'w-sidebar-w'}  fixed overflow-auto h-sidebar-h-sm z-20`}>
       {nav.map((e, i) => (
-        <Link to={e.to} key={i} className="p-2 flex items-center hover:bg-[#16182308] rounded" onClick={() => setActive(e.to)}>
+        <Link to={(e.to === "/following" && !token) ? "" : e.to} key={i} className="p-2 flex items-center hover:bg-[#16182308] rounded" onClick={() => {
+          if (e.to === "/following" && !token) {
+            dispatch(show())
+          } else {
+            setActive(e.to)
+
+          }
+        }}>
           <div className="">{active === e.to ? e.activeIcon : e.icon}</div>
           {active === e.to ? <h2 className="ml-2 text-[#FE2C55] font-bold text-lg text-[]">{e.content}</h2> : <h2 className="ml-2 text-[#161823] font-bold text-lg">{e.content}</h2>}
         </Link>
