@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Button from '../components/Button'
-import { EditIcon, FollowIcon, LockIcon, MoreIcon, ShareIconSolid, SwitchIcon, TickIcon } from '../components/icons/icons'
+import { EditIcon, FollowIcon, LinkIcon, LockIcon, MoreIcon, ShareIconSolid, SwitchIcon, TickIcon } from '../components/icons/icons'
 import Image from '../components/Image'
 import Sidebar from '../layouts/Sidebar'
 import { Link, useLocation, matchRoutes } from 'react-router-dom'
@@ -29,6 +29,7 @@ function UserPage() {
             setUserProfile(res)
         }
         res()
+
     }, [data])
     const handleUnfollow = async () => {
         const res = await followApi.unFollowUser(userProfile.id)
@@ -102,6 +103,10 @@ function UserPage() {
                             }</span><span className='font-normal text-base ml-1'>Thích</span></div>
                         </h2>
                         <h2 className='font-normal text-base mt-2 whitespace-pre-line'>{userProfile.bio}</h2>
+                        {userProfile.website_url && <div className="flex text-[#fe2c55] hover:underline font-semibold">
+                            <LinkIcon />
+                            <a href={userProfile.website_url} className="ml-2  overflow-hidden text-ellipsis ">{userProfile.website_url}</a>
+                        </div>}
                         <ShareIconSolid className='absolute right-9 top-2' />
                         <MoreIcon className='absolute right-0 top-2' />
                     </div>
@@ -137,7 +142,8 @@ function UserPage() {
                         <div className={`grid gap-x-6 gap-y-4 grid-cols-userVideo `} ref={videoListRef}>
                             {videoList ? videoList.map((e, i) =>
                                 <Link className="" key={i} to={`/@${e.user.nickname}/video/${e.id}`}>
-                                    <video src={e.file_url} muted className='h-64 w-full rounded object-cover' onMouseEnter={(e) => handleHoverVideo(e)} onMouseLeave={(e) => {
+                                    <video src={e.file_url} poster={e.thumb_url} muted className='h-64 w-full rounded object-cover' loop onMouseEnter={(e) => handleHoverVideo(e)} onMouseLeave={(e) => {
+                                        e.target.load()
                                         e.target.pause()
                                         // videoRef.current.load()
                                     }}></video>

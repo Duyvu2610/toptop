@@ -19,7 +19,7 @@ module.exports = {
         'tippy': 'rgb(0 0 0 / 12%) 0px 2px 12px'
       },
       margin: {
-        'header': '3.75rem',
+
         'center': '0 auto',
         'span': '-3px 0',
         'search': '-12px -16px'
@@ -46,6 +46,7 @@ module.exports = {
         'focus': '1px'
       },
       spacing: {
+        'header': '3.75rem',
         '50%': '-50%',
         'poper': 'min(calc(calc(100vh - 96px) - 60px), 734px)',
         'menu': '14rem',

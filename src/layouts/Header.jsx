@@ -8,14 +8,21 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import { useDispatch, useSelector } from 'react-redux'
 import { show } from '../redux/appSlice'
+import { useNavigate } from 'react-router-dom'
 
 function Header({ fullSize }) {
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth.login.currentUser)
   const ref1 = useRef()
   const ref2 = useRef()
+  const token = useSelector(state => state.auth.token)
+  const navigate = useNavigate()
   const handleLogin = () => {
     dispatch(show())
+  }
+  const handleUpload = () => {
+    if (token) navigate('/upload')
+    else dispatch(show())
   }
   return (
     <div className={`fixed h-header w-full shadow-header top-0 bg-white z-30`}>
@@ -25,7 +32,7 @@ function Header({ fullSize }) {
         <Search />
         {/* nav */}
         <div className="flex">
-          <Button href="/" rounded leftIcon={<UploadIcon />}>Tải lên</Button>
+          <Button onClick={handleUpload} rounded leftIcon={<UploadIcon />}>Tải lên</Button>
           {user ?
             <>
               <Tippy content="Tin nhắn">

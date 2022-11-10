@@ -78,6 +78,10 @@ function VideoPage() {
         }
 
     }
+    const handleCopy = () => {
+        navigator.clipboard.writeText(window.location.href)
+        alert("Đã sao chép")
+    }
     return (
         <div className='flex bg-white'>
             <div className="flex-1 bg-black relative overflow-hidden px-20">
@@ -130,7 +134,7 @@ function VideoPage() {
                         </div>
                         <div className="flex items-center text-[#161823bf] text-sm mt-4 bg-[#f1f1f2] border-span border-focus justify-between">
                             <p className='pl-2'>{window.location.href}</p>
-                            <div className="text-boldColor font-bold cursor-pointer hover:bg-[#16182308] p-2">Sao chép liên kết</div>
+                            <div className="text-boldColor font-bold cursor-pointer hover:bg-[#16182308] p-2" onClick={handleCopy}>Sao chép liên kết</div>
                         </div>
                     </div>
                 </div>
