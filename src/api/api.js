@@ -1,7 +1,7 @@
 import axios from "axios";
 // const token = JSON.parse(JSON.parse(localStorage.getItem('persist:root')).auth).token
 const API = axios.create({
-    baseURL: "https://tiktok.fullstack.edu.vn/api/",
+    baseURL: "https://tiktok.f8.edu.vn/api/",
 })
 export const get = async (path, data,) => {
     const response = await API.get(path, data);
